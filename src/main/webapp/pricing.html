@@ -1,0 +1,825 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>IMC Turf — Pricing & Combos</title>
+
+<!-- Bootstrap 5 -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Icons (Bootstrap Icons) -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+<!-- Animate.css (small used animations) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+<style>
+  :root {
+    --primary-gradient: linear-gradient(135deg, #ff5722, #ff9800);
+    --secondary-gradient: linear-gradient(135deg, #2196f3, #21cbf3);
+    --accent: #ff9800;
+    --card-bg-weekday: linear-gradient(135deg, rgba(255, 87, 34, 0.1), rgba(255, 152, 0, 0.05));
+    --card-bg-weekend: linear-gradient(135deg, rgba(33, 150, 243, 0.1), rgba(33, 203, 243, 0.05));
+  }
+
+  body {
+    background: url("https://www.transparenttextures.com/patterns/black-linen.png") repeat #000000;
+    background-size: cover;
+    color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  /* particle container behind everything */
+  #particles-js {
+    position: fixed; 
+    inset: 0; 
+    z-index: -1; 
+    opacity: 0.12;
+  }
+
+  /* HERO */
+  .carousel-img {
+    height: 420px; 
+    object-fit: cover;
+    filter: brightness(0.8);
+  }
+  
+  .carousel-caption {
+    top: 0; 
+    bottom: 0; 
+    left: 0; 
+    width: 100%;
+    display: flex; 
+    align-items: center; 
+    padding-left: 3rem;
+    background: linear-gradient(90deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.2) 100%);
+  }
+  
+  .hero-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    text-shadow: 0 6px 20px rgba(225, 222, 66, 0.686);
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Buttons */
+  .glow-btn {
+    background: var(--primary-gradient);
+    color: #fff;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 700;
+    box-shadow: 0 8px 30px rgba(255, 87, 34, 0.25);
+    transition: all 0.3s ease;
+  }
+  
+  .glow-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 18px 50px rgba(255, 87, 34, 0.35);
+    background: linear-gradient(135deg, #ff926f, #ffc29a);
+    color: #fff;
+  }
+
+  /* Main selector cards */
+  .selector-card {
+    border-radius: 18px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: transform .3s, box-shadow .3s;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+  }
+  
+  .selector-card,
+  .pricing-card,
+  .contact-card,
+  .accordion-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    backdrop-filter: blur(10px);
+  }
+  
+  .section-title {
+    color: #ffffff;
+    position: relative;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+  }
+  
+  .section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--primary-gradient);
+  }
+  
+  #weekdayCard {
+    background: var(--card-bg-weekday);
+  }
+  
+  #weekendCard {
+    background: var(--card-bg-weekend);
+  }
+  
+  .selector-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--primary-gradient);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+  
+  #weekendCard::before {
+    background: var(--secondary-gradient);
+  }
+  
+  .selector-card:hover::before {
+    transform: scaleX(1);
+  }
+  
+  .selector-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(255, 87, 34, 0.3);
+    cursor: pointer;
+  }
+  
+  .selector-title {
+    font-size: 1.35rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+  }
+  
+  .selector-sub {
+    opacity: 0.85;
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+  }
+
+  /* Pricing cards (Day / Night) */
+  .pricing-card {
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(255, 87, 34, 0.06), rgba(255, 152, 0, 0.02));
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform .3s, box-shadow .3s;
+    position: relative;
+  }
+  
+  .pricing-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 22px 48px rgba(255, 87, 34, 0.2);
+  }
+  
+  .pricing-card .card-img-top {
+    height: 200px;
+    object-fit: cover;
+    transition: opacity .45s;
+  }
+  
+  .day-img {
+    opacity: 1;
+  }
+  
+  .night-img {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    object-fit: cover;
+  }
+  
+  .pricing-card:hover .day-img {
+    opacity: 0;
+  }
+  
+  .pricing-card:hover .night-img {
+    opacity: 1;
+  }
+
+  .price-big {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  
+  .muted {
+    opacity: 0.8;
+  }
+
+  /* Combo badge flip */
+  .combo-wrap {
+    position: relative;
+    display: inline-block;
+    margin: 6px;
+  }
+  
+  .combo-card {
+    width: 120px;
+    height: 52px;
+    perspective: 800px;
+    display: inline-block;
+  }
+  
+  .combo-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform .55s cubic-bezier(.2, .9, .2, 1);
+  }
+  
+  .combo-card:hover .combo-inner {
+    transform: rotateX(180deg) rotateY(0deg);
+  }
+  
+  .combo-face {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    backface-visibility: hidden;
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+  
+  .combo-front {
+    background: var(--primary-gradient);
+    color: #ffffff;
+  }
+  
+  .combo-back {
+    background: var(--secondary-gradient);
+    color: #ffffff;
+    transform: rotateX(180deg);
+  }
+
+  /* pulse/pop */
+  .pulse {
+    animation: pulse 2.2s infinite ease-in-out;
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: translateY(0) scale(1);
+    }
+    50% {
+      transform: translateY(-6px) scale(1.03);
+    }
+    100% {
+      transform: translateY(0) scale(1);
+    }
+  }
+  
+  .pop {
+    animation: pop .45s ease;
+  }
+  
+  @keyframes pop {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.18);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  /* utility spacing */
+  .space-sm {
+    height: .6rem;
+  }
+  
+  .center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* rules accordion style */
+  .accordion-button {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.5), rgba(155, 36, 36, 0.01));
+    color: #ff9800;
+    font-weight: 600;
+  }
+  
+  .accordion-button:not(.collapsed) {
+    color: #ff5722;
+    background: rgba(255, 87, 34, 0.12);
+  }
+  
+  .accordion-body ul {
+    padding-left: 1.1rem;
+  }
+  
+  .accordion-body ul li {
+    color: #fffafa;
+    margin-bottom: 6px;
+  }
+  
+  .accordion-body ul li::marker {
+    color: #ffc107;
+  }
+  
+  .back-btn {
+    background: transparent;
+    border: 1px solid rgba(255, 0, 0, 0.851);
+    color: #ffffff;
+    border-radius: 8px;
+    padding: .5rem 1rem;
+    transition: all 0.2s ease;
+  }
+  
+  .back-btn:hover {
+    background: rgba(255, 87, 34, 0.2);
+    border-color: var(--accent);
+  }
+
+  /* Contact card */
+  .contact-card {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3));
+    border-radius: 16px;
+    padding: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    height: 100%;
+  }
+
+  @media (max-width: 768px) {
+    .carousel-img {
+      height: 320px;
+    }
+    
+    .hero-title {
+      font-size: 1.8rem;
+    }
+    
+    .combo-card {
+      width: 96px;
+      height: 44px;
+    }
+    
+    .price-big {
+      font-size: 1.5rem;
+    }
+    
+    .carousel-caption {
+      padding-left: 1.5rem;
+    }
+    
+    .selector-card, 
+    .pricing-card {
+      margin-bottom: 1rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- Particles container -->
+<div id="particles-js"></div>
+
+<!-- HERO -->
+<div class="container-fluid px-0">
+  <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="https://i.pinimg.com/1200x/2d/db/1b/2ddb1bae4638537aad1071ce45e926e3.jpg" class="d-block w-100 carousel-img" alt="day-turf">
+        <div class="carousel-caption text-start animate__animated animate__fadeInUp">
+          <div>
+            <div class="hero-title">Book Your Premium Turf Slot Today</div>
+            <div class="space-sm"></div>
+            <p class="mb-3">Experience world-class facilities with competitive pricing</p>
+            
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="https://i.pinimg.com/736x/64/c0/1c/64c01c755114a623dfb9ced7401eb1b8.jpg" class="d-block w-100 carousel-img" alt="night-turf">
+        <div class="carousel-caption text-start animate__animated animate__fadeInUp">
+          <div>
+            <div class="hero-title">Play Under the Lights</div>
+            <div class="space-sm"></div>
+            <p class="mb-3">Enjoy our premium floodlit turf with special night packages</p>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Primary selector -->
+<div class="container my-5">
+  <h2 class="text-center mb-4 section-title">Our Pricing Plans</h2>
+  <div class="row g-4 justify-content-center" id="mainSelector">
+    <!-- Weekday card -->
+    <div class="col-sm-10 col-md-5">
+      <div class="selector-card p-4 center flex-column" id="weekdayCard" role="button" tabindex="0">
+        <div class="mb-3"><i class="bi bi-calendar2-week" style="font-size:2rem;background:var(--primary-gradient);-webkit-background-clip:text;background-clip:text;color:transparent"></i></div>
+        <div class="selector-title">Weekday Prices</div>
+        <div class="selector-sub">Special rates Monday to Friday</div>
+        <div class="space-sm"></div>
+        <div class="muted">1 hr Day ₹800 • 1 hr Night ₹1100</div>
+        <div class="mt-2 small text-warning">Save up to 15% with combo bookings</div>
+      </div>
+    </div>
+
+    <!-- Weekend card -->
+    <div class="col-sm-10 col-md-5">
+      <div class="selector-card p-4 center flex-column" id="weekendCard" role="button" tabindex="0">
+        <div class="mb-3"><i class="bi bi-calendar2-event" style="font-size:2rem;background:var(--secondary-gradient);-webkit-background-clip:text;background-clip:text;color:transparent"></i></div>
+        <div class="selector-title">Weekend Prices</div>
+        <div class="selector-sub">Saturday & Sunday specials</div>
+        <div class="space-sm"></div>
+        <div class="muted">1 hr Day ₹1000 • 1 hr Night ₹1200</div>
+        <div class="mt-2 small text-info">Perfect for weekend tournaments</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Dynamic pricing area (rendered by JS) -->
+<div class="container mb-5" id="dynamicArea" style="display:none">
+  <div class="row mb-4 align-items-center">
+    <div class="col-auto"><button id="backBtn" class="back-btn me-2"><i class="bi bi-arrow-left"></i> Back</button></div>
+    <div class="col"><h4 id="dynamicTitle" class="mb-0 section-title"></h4></div>
+  </div>
+
+  <div class="row g-4" id="dayNightRow">
+    <!-- Day and Night cards will be injected here -->
+  </div>
+</div>
+
+<!-- Combo / Additional info + Rules -->
+<div class="container mb-5">
+  <!-- Rules accordion -->
+  <div class="row g-4">
+    <div class="col-12 col-md-8">
+      <h5 class="mb-3 section-title">Rules & Policies</h5>
+      <div class="accordion" id="rulesAccordion">
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#rule1">
+              <i class="bi bi-x-circle me-2"></i> Cancellation Policy
+            </button>
+          </h2>
+          <div id="rule1" class="accordion-collapse collapse" data-bs-parent="#rulesAccordion">
+            <div class="accordion-body">
+              <ul>
+                <li>Cancellations must be made at least 24 hours before the booked slot.</li>
+                <li>A full refund will be provided if cancellation is done within the allowed time.</li>
+                <li>No refunds will be given for cancellations made less than 24 hours before the slot.</li>
+                <li>Cancellations can be done via phone, app, or website only.</li>
+                <li>Repeated last-minute cancellations may result in temporary booking restrictions.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#rule2">
+              <i class="bi bi-calendar-event me-2"></i> Rescheduling Policy
+            </button>
+          </h2>
+          <div id="rule2" class="accordion-collapse collapse" data-bs-parent="#rulesAccordion">
+            <div class="accordion-body">
+              <ul>
+                <li>Rescheduling requests must be made at least 12 hours before the slot.</li>
+                <li>Rescheduling is subject to availability of alternate slots.</li>
+                <li>A maximum of 2 reschedules are allowed per booking.</li>
+                <li>Rescheduling can be done online or by calling the turf management.</li>
+                <li>No rescheduling is allowed on peak hours unless approved by management.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#rule3">
+              <i class="bi bi-person-check me-2"></i> Player Rules
+            </button>
+          </h2>
+          <div id="rule3" class="accordion-collapse collapse" data-bs-parent="#rulesAccordion">
+            <div class="accordion-body">
+              <ul>
+                <li>Players must wear proper sports shoes; metal spikes are not allowed.</li>
+                <li>No smoking, alcohol, or drugs are permitted inside the turf premises.</li>
+                <li>Food and beverages are allowed only in designated areas.</li>
+                <li>Players must respect the turf timings and vacate immediately after the slot.</li>
+                <li>Any damage to turf property will be charged to the responsible player/group.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Quick summary / contact -->
+    <div class="col-12 col-md-4">
+      <div class="contact-card">
+        <div class="mb-3 text-center">
+          <i class="bi bi-telephone-forward" style="font-size:1.8rem;color:var(--accent)"></i>
+        </div>
+        <div class="fw-bold text-center mb-3">Contact & Hours</div>
+        <div class="muted small mt-2 d-flex align-items-center justify-content-center">
+          <i class="bi bi-clock me-2"></i> Mon–Sun: 6:00 AM – 6:00 PM
+        </div>
+        <div class="muted small d-flex align-items-center justify-content-center mb-3">
+          <i class="bi bi-telephone me-2"></i> Phone: +91 9788686714
+        </div>
+        <div class="space-sm"></div>
+        <div class="text-center">
+          <a href="mailto:maaaran98@gmail.com?subject=Turf%20Booking%20Inquiry&body=Hello,%0AI%20want%20to%20book%20a%20turf%20slot." class="btn glow-btn btn-sm w-100">
+            Email Us
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Scripts (Bootstrap, Vanilla-Tilt, Particles) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.2/dist/vanilla-tilt.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+<script>
+/* ---------- PRICE DATA ---------- */
+const PRICE_DATA = {
+  weekday: {
+    day: { '1hr':800, '2hr':1400, '3hr':1900 },
+    night: { '1hr':1100, '2hr':2000, '3hr':3000 }
+  },
+  weekend: {
+    day: { '1hr':1000, '2hr':2200, '3hr':3300 },
+    night: { '1hr':1200, '2hr':2200, '3hr':3300 }
+  }
+};
+
+/* ---------- PARTICLES.JS ---------- */
+particlesJS("particles-js", {
+  particles: {
+    number: { value: 55 },
+    color: { value: "#ff5722" },
+    shape: { type: "circle" },
+    opacity: { value: 0.25 },
+    size: { value: 3, random: true },
+    move: { enable: true, speed: 1.8 }
+  }
+});
+
+/* ---------- UTILITIES ---------- */
+function animateCounterTo(el, targetVal){
+  const start = parseInt(el.innerText.replace(/\D/g,'')) || 0;
+  const end = parseInt(targetVal, 10);
+  const steps = 22;
+  let i = 0;
+  const step = (end - start)/steps;
+  clearInterval(el._interval);
+  el._interval = setInterval(()=>{
+    i++;
+    const v = Math.round(start + step*i);
+    el.innerText = '₹' + (i>=steps ? end : v);
+    if(i>=steps) clearInterval(el._interval);
+  }, 20);
+}
+
+/* ---------- MAKE PRICE ROW ---------- */
+function makePriceRow(label, priceVal){
+  const row = document.createElement('div');
+  row.className = 'd-flex justify-content-between align-items-center py-2 border-bottom';
+
+  const left = document.createElement('div');
+  left.className='fw-semibold';
+  left.innerText = label;
+  left.style.color = '#70d4ff';
+  left.style.fontWeight = '600';
+
+  const right = document.createElement('div');
+  right.className='price-big';
+  right.innerText = '₹' + priceVal;
+  right.dataset._lastVal = priceVal;
+
+  row.appendChild(left);
+  row.appendChild(right);
+
+  return row;
+}
+
+/* ---------- MAKE COMBO CARD ---------- */
+function makeComboCard(label, frontText, backText, dataset = {}) {
+  const wrap = document.createElement('div');
+  wrap.className = 'combo-wrap';
+  const card = document.createElement('div');
+  card.className = 'combo-card pulse';
+  const inner = document.createElement('div');
+  inner.className = 'combo-inner';
+  const front = document.createElement('div');
+  front.className = 'combo-face combo-front';
+  front.innerText = frontText;
+  const back = document.createElement('div');
+  back.className = 'combo-face combo-back';
+  back.innerText = backText;
+  for(const k in dataset) inner.dataset[k] = dataset[k];
+  inner.appendChild(front);
+  inner.appendChild(back);
+  card.appendChild(inner);
+  wrap.appendChild(card);
+  return wrap;
+}
+
+/* ---------- MAKE PRICING COLUMN ---------- */
+function makePricingColumn(kind, kindLabel, imgQuery, priceMap){
+  const col = document.createElement('div');
+  col.className = 'col-md-6';
+
+  const card = document.createElement('div');
+  card.className = 'pricing-card card position-relative p-0';
+
+  // Image container
+  const imgWrap = document.createElement('div');
+  imgWrap.style.position = 'relative';
+  imgWrap.style.height = '200px';
+  imgWrap.style.overflow = 'hidden';
+
+  // Day image
+  const dayImg = document.createElement('img');
+  dayImg.className = 'card-img-top day-img';
+  dayImg.src = 'https://i.pinimg.com/1200x/df/9d/58/df9d583e28a95b0399830e5be9405ff4.jpg';
+
+  // Night image
+  const nightImg = document.createElement('img');
+  nightImg.className = 'card-img-top night-img';
+  nightImg.src = 'https://i.pinimg.com/736x/03/3b/f2/033bf25ac2bfcd53d5b7bf83ddcdd770.jpg';
+
+  imgWrap.appendChild(dayImg);
+  imgWrap.appendChild(nightImg);
+
+  // Card body
+  const body = document.createElement('div');
+  body.className='card-body text-center py-4';
+
+  // Title with gradient
+  const title = document.createElement('h5');
+  title.className='mb-1';
+  title.innerText = kindLabel;
+  title.style.background = kind==='day' ? 'var(--primary-gradient)' : 'var(--secondary-gradient)';
+  title.style.webkitBackgroundClip = 'text';
+  title.style.backgroundClip = 'text';
+  title.style.color = 'transparent';
+  title.style.fontWeight = '700';
+
+  // Subtext
+  const sub = document.createElement('div');
+  sub.className='small mb-3';
+  sub.innerText = (kind==='day' ? 'Day time slots' : 'Night time slots (floodlights)');
+  sub.style.color = '#ffc107';
+
+  // Price rows
+  const priceContainer = document.createElement('div');
+  priceContainer.className='px-3';
+  priceContainer.appendChild(makePriceRow('1 hour', priceMap['1hr']));
+  priceContainer.appendChild(makePriceRow('2 hours (combo)', priceMap['2hr']));
+  priceContainer.appendChild(makePriceRow('3 hours (combo)', priceMap['3hr']));
+
+  // Combos
+  const combosDiv = document.createElement('div');
+  combosDiv.className='mt-3';
+
+  const combo2 = makeComboCard('2hr', `2 hrs • ₹${priceMap['2hr']}`, `2 hrs • ₹${priceMap['2hr']}`, {value: priceMap['2hr']} );
+  combo2.querySelector('.combo-inner').dataset.value = priceMap['2hr'];
+
+  const combo3 = makeComboCard('3hr', `3 hrs • ₹${priceMap['3hr']}`, `3 hrs • ₹${priceMap['3hr']}`, {value: priceMap['3hr']} );
+  combo3.querySelector('.combo-inner').dataset.value = priceMap['3hr'];
+
+  combosDiv.appendChild(combo2);
+  combosDiv.appendChild(combo3);
+
+  // Action button
+  const btnWrap = document.createElement('div');
+  btnWrap.className='mt-4 d-flex gap-2 justify-content-center';
+  const bookBtn = document.createElement('button');
+
+
+  btnWrap.appendChild(bookBtn);
+
+  // Assemble
+  body.appendChild(title);
+  body.appendChild(sub);
+  body.appendChild(priceContainer);
+  body.appendChild(combosDiv);
+  body.appendChild(btnWrap);
+
+  card.appendChild(imgWrap);
+  card.appendChild(body);
+  col.appendChild(card);
+
+  // Add tilt
+  VanillaTilt.init(card, { max: 10, speed: 450, glare: true, "max-glare": 0.15 });
+
+  return col;
+}
+
+/* ---------- EVENT HANDLING ---------- */
+const weekdayCard = document.getElementById('weekdayCard');
+const weekendCard = document.getElementById('weekendCard');
+const mainSelector = document.getElementById('mainSelector');
+const dynamicArea = document.getElementById('dynamicArea');
+const dayNightRow = document.getElementById('dayNightRow');
+const dynamicTitle = document.getElementById('dynamicTitle');
+const backBtn = document.getElementById('backBtn');
+
+weekdayCard.addEventListener('click', ()=> openSplitView('weekday'));
+weekendCard.addEventListener('click', ()=> openSplitView('weekend'));
+weekdayCard.addEventListener('keypress', (e)=>{ if(e.key==='Enter') openSplitView('weekday')});
+weekendCard.addEventListener('keypress', (e)=>{ if(e.key==='Enter') openSplitView('weekend')});
+
+backBtn.addEventListener('click', ()=> {
+  dynamicArea.style.display='none';
+  mainSelector.style.display = '';
+  window.scrollTo({top:0, behavior:'smooth'});
+});
+
+function openSplitView(which){
+  mainSelector.style.display = 'none';
+  dynamicArea.style.display = '';
+  dynamicTitle.innerText = (which==='weekday' ? 'Weekday Pricing — Day & Night' : 'Weekend Pricing — Day & Night');
+  dayNightRow.innerHTML = '';
+
+  const dayPrices = PRICE_DATA[which].day;
+  const nightPrices = PRICE_DATA[which].night;
+
+  const dayCol = makePricingColumn('day', (which==='weekday'?'Weekday — Day':'Weekend — Day'), 'football,field', dayPrices);
+  const nightCol = makePricingColumn('night', (which==='weekday'?'Weekday — Night':'Weekend — Night'), 'football,stadium', nightPrices);
+
+  dayNightRow.appendChild(dayCol);
+  dayNightRow.appendChild(nightCol);
+
+  // animate counters
+  setTimeout(()=>{
+    dayNightRow.querySelectorAll('.price-big').forEach(el=>{
+      animateCounterTo(el, parseInt(el.innerText.replace(/\D/g,''),10));
+    });
+    dayNightRow.querySelectorAll('.combo-inner').forEach(inner=>{
+      inner.parentElement.classList.add('pop');
+      setTimeout(()=> inner.parentElement.classList.remove('pop'), 500);
+    });
+  }, 90);
+}
+
+/* ---------- Initialize tilt for selector cards ---------- */
+VanillaTilt.init(document.querySelectorAll(".selector-card"), { max: 8, speed: 350, glare:false });
+
+/* ---------- Keyboard accessibility ---------- */
+document.querySelectorAll('[role="button"]').forEach(btn=>{
+  btn.addEventListener('keydown', (e)=>{
+    if(e.key === 'Enter' || e.key === ' ') btn.click();
+  });
+});
+
+// Redirect to booking page
+function goToBooking() {
+  window.location.href = "booking.html";
+}
+
+// Check Availability / Book Now buttons
+document.querySelectorAll('.glow-btn:not(.email-btn)').forEach(btn => {
+  if (!btn.hasAttribute('href')) {
+    btn.addEventListener('click', goToBooking);
+  }
+});
+
+// Book Now buttons inside dynamic pricing
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('glow-btn') &&
+      e.target.innerText.includes('Book Now')) {
+    goToBooking();
+  }
+});
+</script>
+</body>
+</html>

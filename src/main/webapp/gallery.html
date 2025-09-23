@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IMC Turf Gallery - Premium Experience</title>
+    <!-- Bootstrap 5 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- AOS Library -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"
+      rel="stylesheet"
+    />
+    <!-- GLightbox -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary: #00d084;
+        --primary-dark: #00b876;
+        --secondary: #ff6b6b;
+        --dark: #0d1117;
+        --darker: #080c12;
+        --light: #f8f9fa;
+        --gray: #6c757d;
+        --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Poppins', sans-serif;
+        background: var(--darker);
+        color: var(--light);
+        line-height: 1.6;
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      /* Animated Background */
+      .animated-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -2;
+        background: linear-gradient(135deg, var(--darker) 0%, #001f2d 40%, #003366 100%);
+        background-size: 400% 400%;
+        animation: gradientShift 20s ease infinite;
+      }
+
+      @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+
+      /* Particles Effect */
+      #particles-js {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        opacity: 0.4;
+      }
+
+      /* Header */
+      .page-header {
+        text-align: center;
+        padding: 3rem 1rem;
+        background: rgba(13, 17, 23, 0.8);
+        backdrop-filter: blur(10px);
+        position: relative;
+        margin-bottom: 2rem;
+        border-bottom: 1px solid rgba(0, 208, 132, 0.3);
+        box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+      }
+
+      .page-header h1 {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 2.8rem;
+        font-weight: 700;
+        margin: 0;
+        background: linear-gradient(90deg, var(--primary), #1dbf73, #00ffcc);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-size: 200% auto;
+        animation: textShine 5s linear infinite;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+      }
+
+      @keyframes textShine {
+        0% { background-position: 0% 50%; }
+        100% { background-position: 200% 50%; }
+      }
+
+      .page-header p {
+        color: #aaa;
+        font-size: 1.1rem;
+        max-width: 600px;
+        margin: 0.5rem auto 0;
+      }
+
+      .logo-icon {
+        height: 50px;
+        width: auto;
+        filter: drop-shadow(0 0 10px rgba(0, 208, 132, 0.5));
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+      }
+
+      /* Navigation */
+      .gallery-nav {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background: rgba(13, 17, 23, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 1rem 0;
+        margin-bottom: 2rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .gallery-nav .nav-container {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
+
+      .nav-item {
+        padding: 0.5rem 1.2rem;
+        background: rgba(0, 208, 132, 0.1);
+        border: 1px solid rgba(0, 208, 132, 0.3);
+        border-radius: 50px;
+        color: var(--light);
+        font-weight: 500;
+        transition: var(--transition);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .nav-item:hover, .nav-item.active {
+        background: var(--primary);
+        color: var(--darker);
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 208, 132, 0.4);
+      }
+
+      /* Main Container */
+      .gallery-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 1rem 3rem;
+      }
+
+      /* Section Titles */
+      .section-title {
+        text-align: center;
+        margin: 3rem 0 2rem;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+      }
+
+      .section-title h2 {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--primary);
+        margin: 0;
+        padding: 0 1rem;
+        position: relative;
+        display: inline-block;
+      }
+
+      .section-title::before,
+      .section-title::after {
+        content: '';
+        flex: 1;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, var(--primary), transparent);
+      }
+
+      /* Gallery Grid */
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 25px;
+        margin-bottom: 3rem;
+      }
+
+      /* Gallery Item */
+      .gallery-item {
+        position: relative;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        transition: var(--transition);
+        transform: translateY(50px);
+        opacity: 0;
+        height: 280px;
+        background: linear-gradient(145deg, #0e131a, #1a1f26);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      .gallery-item.visible {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      .gallery-item:hover {
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 208, 132, 0.4);
+      }
+
+      .gallery-item img,
+      .gallery-item video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: var(--transition);
+      }
+
+      .gallery-item:hover img,
+      .gallery-item:hover video {
+        transform: scale(1.1);
+      }
+
+      /* Overlay */
+      .item-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+        padding: 1.5rem 1rem 1rem;
+        color: white;
+        transform: translateY(100%);
+        transition: var(--transition);
+      }
+
+      .gallery-item:hover .item-overlay {
+        transform: translateY(0);
+      }
+
+      .item-title {
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        font-size: 1.1rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .item-desc {
+        font-size: 0.9rem;
+        opacity: 0.8;
+        line-height: 1.4;
+      }
+
+      /* Play Button for Videos */
+      .play-btn {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 60px;
+        height: 60px;
+        background: rgba(0, 208, 132, 0.8);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: var(--transition);
+        z-index: 2;
+      }
+
+      .play-btn i {
+        color: white;
+        font-size: 1.5rem;
+        margin-left: 4px;
+      }
+
+      .gallery-item:hover .play-btn {
+        opacity: 1;
+      }
+
+      /* Caption */
+      .item-caption {
+        text-align: center;
+        margin-top: 1rem;
+        color: #ccc;
+        font-size: 0.9rem;
+        padding: 0 1rem;
+      }
+
+      /* Back to Top Button */
+      .back-to-top {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
+        background: var(--primary);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+        opacity: 0;
+        visibility: hidden;
+        transition: var(--transition);
+        z-index: 1000;
+      }
+
+      .back-to-top.visible {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .back-to-top:hover {
+        transform: translateY(-5px);
+        background: var(--primary-dark);
+      }
+
+      /* Footer */
+      .gallery-footer {
+        text-align: center;
+        padding: 2rem;
+        margin-top: 3rem;
+        background: rgba(13, 17, 23, 0.8);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+      .gallery-footer p {
+        color: #aaa;
+        margin: 0;
+      }
+
+      /* Loading Animation */
+      .gallery-item::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        animation: loading 1.5s infinite;
+        z-index: 1;
+      }
+
+      @keyframes loading {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
+      }
+
+      .gallery-item.loaded::before {
+        display: none;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 992px) {
+        .gallery-grid {
+          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+          gap: 20px;
+        }
+        
+        .page-header h1 {
+          font-size: 2.2rem;
+        }
+        
+        .section-title h2 {
+          font-size: 1.7rem;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .gallery-grid {
+          grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+          gap: 15px;
+        }
+        
+        .page-header {
+          padding: 2rem 1rem;
+        }
+        
+        .page-header h1 {
+          font-size: 1.8rem;
+          flex-direction: column;
+          gap: 10px;
+        }
+        
+        .logo-icon {
+          height: 40px;
+        }
+        
+        .gallery-nav .nav-container {
+          justify-content: flex-start;
+          overflow-x: auto;
+          padding-bottom: 0.5rem;
+        }
+        
+        .nav-item {
+          white-space: nowrap;
+          font-size: 0.9rem;
+          padding: 0.4rem 1rem;
+        }
+        
+        .section-title h2 {
+          font-size: 1.5rem;
+        }
+        
+        .section-title::before,
+        .section-title::after {
+          flex: 0.5;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .gallery-item {
+          height: 240px;
+        }
+        
+        .page-header h1 {
+          font-size: 1.6rem;
+        }
+        
+        .page-header p {
+          font-size: 0.9rem;
+        }
+        
+        .section-title {
+          margin: 2rem 0 1.5rem;
+        }
+        
+        .section-title h2 {
+          font-size: 1.3rem;
+        }
+        
+        .item-overlay {
+          padding: 1rem 0.8rem 0.8rem;
+        }
+        
+        .item-title {
+          font-size: 1rem;
+        }
+        
+        .item-desc {
+          font-size: 0.8rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Animated Background -->
+    <div class="animated-bg"></div>
+    <div id="particles-js"></div>
+
+    <!-- Header -->
+    <header class="page-header">
+      <h1>
+        <img src="images/logo2.png" alt="IMC Turf Academy" class="logo-icon" />
+        IMC Turf Academy Gallery
+      </h1>
+      <p>Summer Coaching | Professional Coaches | Premium Turf | Exciting Tournaments</p>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="gallery-nav">
+      <div class="nav-container">
+        <div class="nav-item active" data-filter="all">
+          <i class="fas fa-th"></i> All
+        </div>
+        <div class="nav-item" data-filter="summer">
+          <i class="fas fa-sun"></i> Summer Coaching
+        </div>
+        <div class="nav-item" data-filter="coaches">
+          <i class="fas fa-user-tie"></i> Coaches
+        </div>
+        <div class="nav-item" data-filter="turf">
+          <i class="fas fa-football-ball"></i> Turf
+        </div>
+        <div class="nav-item" data-filter="tournaments">
+          <i class="fas fa-trophy"></i> Tournaments
+        </div>
+        <div class="nav-item" data-filter="videos">
+          <i class="fas fa-play-circle"></i> Videos
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="gallery-container">
+      <!-- SUMMER COACHING -->
+      <div class="section-title" data-aos="fade-up">
+        <h2><i class="fas fa-sun me-2"></i> Summer Coaching</h2>
+      </div>
+      <div class="gallery-grid">
+        <div class="gallery-item" data-category="summer">
+          <a href="images/summer1.jpg" class="glightbox" data-gallery="summer">
+            <img src="images/s1.jpg" alt="Summer Coaching 1" />
+            <div class="item-overlay">
+              <div class="item-title">
+                <i class="fas fa-sun"></i> Beginner & Advanced Coaching
+              </div>
+              <div class="item-desc">
+                Professional training programs for all skill levels
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="gallery-item" data-category="summer" data-aos-delay="100">
+          <a href="images/summer2.jpg" class="glightbox" data-gallery="summer">
+            <img src="images/s2.jpeg" alt="Summer Coaching 2" />
+            <div class="item-overlay">
+              <div class="item-title">
+                <i class="fas fa-running"></i> Fun & Skill Training
+              </div>
+              <div class="item-desc">
+                Engaging sessions that develop skills while having fun
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- COACHES -->
+      <div class="section-title" data-aos="fade-up">
+        <h2><i class="fas fa-user-tie me-2"></i> Professional Coaches</h2>
+      </div>
+      <div class="gallery-grid">
+        <div class="gallery-item" data-category="coaches">
+          <a href="images/coach1.jpg" class="glightbox" data-gallery="coaches">
+            <img src="images/u2.jpg" alt="Coach 1" />
+            <div class="item-overlay">
+              <div class="item-title">
+                <i class="fas fa-user-tie"></i> Head Coach
+              </div>
+              <div class="item-desc">
+                Mr. Jeeva - Specialized in Football Training
+              </div>
+            </div>
+          </a>
+          <div class="item-caption">
+            Mr. Jeeva – Head Coach<br />
+            <small>Specialized in Football Training</small>
+          </div>
+        </div>
+        <div class="gallery-item" data-category="coaches" data-aos-delay="100">
+          <a href="images/coach2.jpg" class="glightbox" data-gallery="coaches">
+            <img src="images/u1.jpeg" alt="Coach 2" />
+            <div class="item-overlay">
+              <div class="item-title">
+                <i class="fas fa-user-tie"></i> Assistant Coach
+              </div>
+              <div class="item-desc">
+                Mr. Yogesh - Fitness & Endurance Training
+              </div>
+            </div>
+          </a>
+          <div class="item-caption">
+            Mr. Yogesh – Assistant Coach<br />
+            <small>Fitness & Endurance Training</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- TURF VIDEOS -->
+      <div class="section-title" data-aos="fade-up">
+        <h2><i class="fas fa-play-circle me-2"></i> Turf Videos</h2>
+      </div>
+      <div class="gallery-grid">
+        <div class="gallery-item" data-category="videos">
+          <a href="videos/d1.mp4" class="glightbox" data-type="video" data-gallery="videos">
+            <video src="videos/v2.mp4" muted></video>
+            <div class="play-btn">
+              <i class="fas fa-play"></i>
+            </div>
+            <div class="item-overlay">
+              <div class="item-title">
+                <i class="fas fa-video"></i> Starting Turf
+              </div>
+              <div class="item-desc">
+                Watch our turf in action during daytime
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="gallery-item" data-category="videos" data-aos-delay="100">
+          <a href="videos/v1.mp4" class="glightbox" data-type="video" data-gallery="videos">
+            <video src="videos/v1.mp4" muted></video>
+            <div class="play-btn">
+              <i class="fas fa-play"></i>
+            </div>
+            <div class="item-overlay">
+              <div class="item-title">
+                <i class="fas fa-moon"></i> Night View
+              </div>
+              <div class="item-desc">
+                Experience our turf under professional lighting
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="gallery-item" data-category="videos" data-aos-delay="150">
+          <a href="videos/v2.mp4" class="glightbox" data-type="video" data-gallery="videos">
+            <video src="videos/d1.mp4" muted></video>
+            <div class="play-btn">
+              <i class="fas fa-play"></i>
+            </div>
+            <div class="item-overlay">
+              <div class="item-title">
+                <i class="fas fa-music"></i> Dance Performance
+              </div>
+              <div class="item-desc">
+                Cultural events at our turf facility
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="gallery-item" data-category="videos" data-aos-delay="200">
+          <a href="videos/v3.mp4" class="glightbox" data-type="video" data-gallery="videos">
+            <video src="videos/v3.mp4" muted></video>
+            <div class="play-btn">
+              <i class="fas fa-play"></i>
+            </div>
+            <div class="item-overlay">
+              <div class="item-title">
+                <i class="fas fa-archway"></i> Entry Turf
+              </div>
+              <div class="item-desc">
+                Welcome to our premium turf facility
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="gallery-item" data-category="videos" data-aos-delay="250">
+          <a href="videos/v4.mp4" class="glightbox" data-type="video" data-gallery="videos">
+            <video src="videos/v4.mp4" muted></video>
+            <div class="play-btn">
+              <i class="fas fa-play"></i>
+            </div>
+            <div class="item-overlay">
+              <div class="item-title">
+                <i class="fas fa-calendar-alt"></i> Event Time
+              </div>
+              <div class="item-desc">
+                Special events and tournaments at our facility
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- TURF IMAGES -->
+      <div class="section-title" data-aos="fade-up">
+        <h2><i class="fas fa-football-ball me-2"></i> Turf Images</h2>
+      </div>
+      <div class="gallery-grid">
+        <div class="gallery-item" data-category="turf">
+          <a href="turf/images/IMG_2843.JPG" class="glightbox" data-gallery="turf">
+            <img src="images/IMG_2843.JPG" alt="Turf 1" />
+            <div class="item-overlay">
+              <div class="item-title">
+                <i class="fas fa-landmark"></i> Main Turf Area
+              </div>
+              <div class="item-desc">
+                Our premium quality playing surface
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="gallery-item" data-category="turf" data-aos-delay="100">
+          <a href="turf/images/IMG_2844.JPG" class="glightbox" data-gallery="turf">
+            <img src="images/IMG_2844.JPG" alt="Turf 2" />
+            <div class="item-overlay">
+              <div class="item-title">
+                <i class="fas fa-lightbulb"></i> Evening Lights
+              </div>
+              <div class="item-desc">
+                Professional lighting for night games
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="gallery-item" data-category="turf" data-aos-delay="100">
+          <a href="turf/images/IMG_2847.JPG" class="glightbox" data-gallery="turf">
+            <img src="images/IMG_2857.JPG" alt="Turf 3" />
+            <div class="item-overlay">
+              <div class="item-title">
+                <i class="fas fa-star"></i> Premium Facility
+              </div>
+              <div class="item-desc">
+                Top-quality turf for optimal performance
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="gallery-item" data-category="turf" data-aos-delay="200">
+          <a href="turf/images/IMG_2848.JPG" class="glightbox" data-gallery="turf">
+            <img src="images/IMG_2847.JPG" alt="Turf 4" />
+            <div class="item-overlay">
+              <div class="item-title">
+                <i class="fas fa-users"></i> Training Ground
+              </div>
+              <div class="item-desc">
+                Perfect environment for team practice
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="gallery-item" data-category="turf" data-aos-delay="100">
+          <a href="turf/images/IMG_2844.JPG" class="glightbox" data-gallery="turf">
+            <img src="images/IMG_2855.JPG" alt="Turf 5" />
+            <div class="item-overlay">
+              <div class="item-title">
+                <i class="fas fa-cloud-sun"></i> Evening Session
+              </div>
+              <div class="item-desc">
+                Perfect conditions for evening matches
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="gallery-item" data-category="turf" data-aos-delay="100">
+          <a href="turf/images/IMG_2844.JPG" class="glightbox" data-gallery="turf">
+            <img src="images/IMG_2848.JPG" alt="Turf 6" />
+            <div class="item-overlay">
+              <div class="item-title">
+                <i class="fas fa-expand"></i> Spacious Layout
+              </div>
+              <div class="item-desc">
+                Ample space for various sports activities
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="gallery-item" data-category="turf" data-aos-delay="300">
+          <a href="turf/images/IMG_2850.JPG" class="glightbox" data-gallery="turf">
+            <img src="images/IMG_2850.JPG" alt="Turf 7" />
+            <div class="item-overlay">
+              <div class="item-title">
+                <i class="fas fa-eye"></i> Side View
+              </div>
+              <div class="item-desc">
+                Panoramic view of our excellent facility
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="gallery-item" data-category="turf" data-aos-delay="400">
+          <a href="turf/images/IMG_2859.JPG" class="glightbox" data-gallery="turf">
+            <img src="images/IMG_2859.JPG" alt="Turf 8" />
+            <div class="item-overlay">
+              <div class="item-title">
+                <i class="fas fa-moon"></i> Evening Training
+              </div>
+              <div class="item-desc">
+                Night sessions under professional lighting
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="gallery-item" data-category="turf" data-aos-delay="100">
+          <a href="turf/images/IMG_2844.JPG" class="glightbox" data-gallery="turf">
+            <img src="images/IMG_2851.JPG" alt="Turf 9" />
+            <div class="item-overlay">
+              <div class="item-title">
+                <i class="fas fa-shield-alt"></i> Quality Surface
+              </div>
+              <div class="item-desc">
+                Premium turf for safety and performance
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- TOURNAMENTS -->
+      <div class="section-title" data-aos="fade-up">
+        <h2><i class="fas fa-trophy me-2"></i> Tournaments</h2>
+      </div>
+      <div class="gallery-grid">
+        <div class="gallery-item" data-category="tournaments">
+          <a href="images/t0.webp" class="glightbox" data-gallery="tournaments">
+            <img src="images/t0.webp" alt="Tournament 1" />
+            <div class="item-overlay">
+              <div class="item-title">
+                <i class="fas fa-trophy"></i> Local Championship
+              </div>
+              <div class="item-desc">
+                Competitive matches between local teams
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="gallery-item" data-category="tournaments" data-aos-delay="100">
+          <a href="images/t1.heic" class="glightbox" data-gallery="tournaments">
+            <img src="images/t1.heic" alt="Tournament 2" />
+            <div class="item-overlay">
+              <div class="item-title">
+                <i class="fas fa-calendar-day"></i> Annual Match
+              </div>
+              <div class="item-desc">
+                Our flagship yearly tournament event
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="gallery-item" data-category="tournaments" data-aos-delay="200">
+          <a href="images/t2.webp" class="glightbox" data-gallery="tournaments">
+            <img src="images/t2.webp" alt="Tournament 3" />
+            <div class="item-overlay">
+              <div class="item-title">
+                <i class="fas fa-users"></i> Youth League
+              </div>
+              <div class="item-desc">
+                Developing young talent through competition
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="gallery-item" data-category="tournaments" data-aos-delay="300">
+          <a href="images/t3.heic" class="glightbox" data-gallery="tournaments">
+            <img src="images/t3.heic" alt="Tournament 4" />
+            <div class="item-overlay">
+              <div class="item-title">
+                <i class="fas fa-child"></i> Kids Tournament
+              </div>
+              <div class="item-desc">
+                Fun competitions for our youngest players
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="gallery-item" data-category="tournaments" data-aos-delay="400">
+          <a href="images/t6.jpeg" class="glightbox" data-gallery="tournaments">
+            <img src="images/t6.jpeg" alt="Tournament 5" />
+            <div class="item-overlay">
+              <div class="item-title">
+                <i class="fas fa-flag-checkered"></i> Final Match
+              </div>
+              <div class="item-desc">
+                Championship games with intense competition
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top">
+      <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Footer -->
+    <footer class="gallery-footer">
+      <p>© 2023 IMC Turf Academy. All rights reserved.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+    <script>
+      // Initialize AOS
+      AOS.init({
+        duration: 1200,
+        easing: "ease-in-out",
+        once: true,
+        mirror: false
+      });
+
+      // Initialize GLightbox
+      const lightbox = GLightbox({
+        selector: ".glightbox",
+        touchNavigation: true,
+        loop: true,
+        autoplayVideos: true,
+        plyr: { 
+          css: 'https://cdn.plyr.io/3.6.8/plyr.css', 
+          js: 'https://cdn.plyr.io/3.6.8/plyr.js' 
+        }
+      });
+
+      // Initialize Particles.js
+      particlesJS("particles-js", {
+        particles: {
+          number: { value: 80, density: { enable: true, value_area: 800 } },
+          color: { value: "#00d084" },
+          shape: { type: "circle" },
+          opacity: { value: 0.5, random: true },
+          size: { value: 3, random: true },
+          line_linked: {
+            enable: true,
+            distance: 150,
+            color: "#00d084",
+            opacity: 0.4,
+            width: 1
+          },
+          move: {
+            enable: true,
+            speed: 2,
+            direction: "none",
+            random: true,
+            straight: false,
+            out_mode: "out",
+            bounce: false
+          }
+        },
+        interactivity: {
+          detect_on: "canvas",
+          events: {
+            onhover: { enable: true, mode: "grab" },
+            onclick: { enable: true, mode: "push" },
+            resize: true
+          }
+        },
+        retina_detect: true
+      });
+
+      // Filter functionality
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.addEventListener('click', function() {
+          // Update active state
+          document.querySelectorAll('.nav-item').forEach(nav => {
+            nav.classList.remove('active');
+          });
+          this.classList.add('active');
+          
+          const filter = this.getAttribute('data-filter');
+          
+          // Show all if filter is 'all'
+          if (filter === 'all') {
+            document.querySelectorAll('.gallery-item').forEach(item => {
+              item.style.display = 'block';
+            });
+          } else {
+            // Hide all items first
+            document.querySelectorAll('.gallery-item').forEach(item => {
+              item.style.display = 'none';
+            });
+            
+            // Show items with matching category
+            document.querySelectorAll(`.gallery-item[data-category="${filter}"]`).forEach(item => {
+              item.style.display = 'block';
+            });
+          }
+        });
+      });
+
+      // Back to top button
+      const backToTopButton = document.querySelector('.back-to-top');
+      
+      window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 300) {
+          backToTopButton.classList.add('visible');
+        } else {
+          backToTopButton.classList.remove('visible');
+        }
+      });
+      
+      backToTopButton.addEventListener('click', () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+
+      // Lazy loading and animation on scroll
+      const galleryItems = document.querySelectorAll('.gallery-item');
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            entry.target.classList.add('loaded');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.1
+      });
+      
+      galleryItems.forEach(item => {
+        observer.observe(item);
+      });
+
+      // Preload images for better performance
+      function preloadImages() {
+        const images = document.querySelectorAll('img');
+        images.forEach(img => {
+          const src = img.getAttribute('src');
+          if (src) {
+            new Image().src = src;
+          }
+        });
+      }
+      
+      window.addEventListener('load', preloadImages);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,405 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<% if (session == null || session.getAttribute("user_id") == null) {
+     response.sendRedirect("login.jsp");
+     return;
+} %>
+
+<% String error = (String) request.getAttribute("error"); %>
+<% if (error != null) { %>
+    <div class="alert alert-danger text-center">
+        <%= error %>
+    </div>
+<% } %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Turf Booking - Smart Slot Management</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Animate.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <style>
+    :root {
+      --primary: #4ade80;
+      --primary-dark: #22c55e;
+      --primary-light: rgba(74, 222, 128, 0.1);
+      --dark: #111827;
+      --darker: #0a0e1a;
+      --light: #d1fae5;
+      --success: #166534;
+      --danger: #dc2626;
+      --danger-dark: #b91c1c;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, var(--darker), var(--dark));
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      padding: 20px;
+    }
+    
+    .booking-container {
+      max-width: 900px;
+      background: rgba(17, 24, 39, 0.95);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(74, 222, 128, 0.1);
+    }
+    
+    .page-header {
+      text-align: center;
+      margin-bottom: 30px;
+      position: relative;
+    }
+    
+    .page-header::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background: var(--primary);
+      border-radius: 3px;
+    }
+    
+    h2 { 
+      color: var(--primary); 
+      margin-bottom: 10px; 
+      font-weight: 700; 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    .form-label {
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: var(--light);
+    }
+    
+    .form-control, .form-select {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(74, 222, 128, 0.2);
+      color: white;
+      border-radius: 8px;
+      padding: 12px 15px;
+      transition: all 0.3s ease;
+    }
+    
+    .form-control:focus, .form-select:focus {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 0.25rem rgba(74, 222, 128, 0.25);
+      color: white;
+    }
+    
+    .form-control::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+    
+    .time-slot { 
+      padding: 15px 10px; 
+      border-radius: 10px; 
+      margin-bottom: 12px; 
+      cursor: pointer; 
+      text-align: center; 
+      font-size: 0.9rem; 
+      position: relative;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+    
+    .time-slot.available { 
+      background: var(--success); 
+      border: 1px solid #15803d; 
+      color: #fff; 
+    }
+    
+    .time-slot.available:hover { 
+      background: #22c55e; 
+      transform: translateY(-3px); 
+      box-shadow: 0 5px 15px rgba(34, 197, 94, 0.3);
+    }
+    
+    .time-slot.selected { 
+      border: 2px solid var(--primary); 
+      background: var(--primary-light); 
+      box-shadow: 0 0 20px rgba(74, 222, 128, 0.4); 
+      color: var(--primary);
+      font-weight: 600;
+    }
+    
+    .time-slot.booked {
+      background: var(--danger);
+      border: 1px solid var(--danger-dark);
+      color: #fff;
+      cursor: not-allowed;
+      opacity: 0.8;
+    }
+    
+    .slot-legend { 
+      display: flex; 
+      justify-content: center; 
+      gap: 20px; 
+      margin-bottom: 20px; 
+      flex-wrap: wrap; 
+      background: rgba(255, 255, 255, 0.05);
+      padding: 15px;
+      border-radius: 10px;
+    }
+    
+    .legend-item { 
+      display: flex; 
+      align-items: center; 
+      gap: 8px; 
+      font-size: 0.85rem; 
+    }
+    
+    .legend-color { 
+      width: 18px; 
+      height: 18px; 
+      border-radius: 4px; 
+    }
+    
+    .legend-available { background: var(--success); }
+    .legend-selected { background: var(--primary-light); border: 2px solid var(--primary); }
+    .legend-booked { background: var(--danger); }
+    
+    .btn-submit {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      border: none;
+      border-radius: 10px;
+      padding: 15px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      margin-top: 20px;
+      box-shadow: 0 5px 15px rgba(34, 197, 94, 0.3);
+    }
+    
+    .btn-submit:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(34, 197, 94, 0.4);
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+    }
+    
+    .selected-slot-display {
+      background: rgba(74, 222, 128, 0.1);
+      border-radius: 10px;
+      padding: 10px 15px;
+      margin: 15px 0;
+      text-align: center;
+      border: 1px dashed var(--primary);
+    }
+    
+    .slot-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 12px;
+      margin-top: 15px;
+    }
+    
+    /* Animation classes */
+    .animate-slide-in {
+      animation: slideIn 0.5s ease forwards;
+    }
+    
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .booking-container {
+        padding: 20px;
+      }
+      
+      .slot-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .slot-legend {
+        gap: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="booking-container animate__animated animate__fadeIn">
+    <div class="page-header">
+      <h2><i class="bi bi-tree-fill"></i> Turf Booking - Smart Slot Management</h2>
+    </div>
+
+    <form id="bookingForm" action="BookingServlet" method="POST">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Full Name</label>
+          <input type="text" class="form-control" name="name" required placeholder="Enter your full name">
+        </div>
+      <div class="col-md-6 mb-3">
+  <label class="form-label">Phone</label>
+  <input 
+    type="tel" 
+    class="form-control" 
+    name="phone" 
+    id="phone"
+    required 
+    placeholder="Enter your phone number"
+    maxlength="10"
+    pattern="[0-9]{10}"
+    title="Phone number must be exactly 10 digits (numbers only)">
+</div>
+
+
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-control" name="email" required placeholder="Enter your email address">
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Booking Date</label>
+          <input type="date" class="form-control" id="date" name="date" required>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Duration (Hours)</label>
+          <select class="form-select" id="duration" name="duration" required>
+            <option value="1">1 Hour</option>
+            <option value="2" selected>2 Hours</option>
+            <option value="3">3 Hours</option>
+            <option value="4">4 Hours</option>
+          </select>
+        </div>
+      </div>
+
+      <input type="hidden" id="selectedSlotInput" name="slot">
+
+      <div class="slot-legend">
+        <div class="legend-item"><div class="legend-color legend-available"></div> Available</div>
+        <div class="legend-item"><div class="legend-color legend-selected"></div> Selected</div>
+        <div class="legend-item"><div class="legend-color legend-booked"></div> Booked</div>
+      </div>
+
+      <label class="form-label">Select Time Slot</label>
+      
+      <div class="selected-slot-display">
+        <span id="selectedSlotText">No slot selected yet</span>
+      </div>
+      
+      <div class="slot-grid" id="timeSlotsContainer"></div>
+
+      <button type="submit" class="btn btn-submit w-100">
+        <i class="bi bi-check-circle-fill me-2"></i>Confirm Booking & Proceed
+      </button>
+    </form>
+  </div>
+
+  <script>
+    //✅ Fetch booked slots from backend
+    async function fetchBookedSlots(date) {
+      try {
+        const response = await fetch(`BookingStatusServlet?date=${date}`);
+        if (!response.ok) throw new Error("Network error");
+        const data = await response.json();
+        console.log("Booked slots from DB:", data); // 🔍 Debugging
+        return Array.isArray(data) ? data : [];
+      } catch (err) {
+        console.error("Error fetching booked slots:", err);
+        return [];
+      }
+    }
+
+    function formatTime(hour) {
+      return String(hour).padStart(2, "0") + ":00";
+    }
+
+    function normalize(slot) {
+      return slot.replace(/\s+/g, '').toLowerCase();
+    }
+
+    async function generateSlots() {
+      const container = document.getElementById("timeSlotsContainer");
+      container.innerHTML = "";
+
+      const duration = parseInt(document.getElementById("duration").value);
+      const date = document.getElementById("date").value;
+      if (!date) return;
+
+      const bookedSlots = await fetchBookedSlots(date);
+
+      const todayStr = new Date().toISOString().split("T")[0];
+      const now = new Date();
+
+      for (let hour = 0; hour <= 24 - duration; hour++) {
+        const start = formatTime(hour);
+        const end = formatTime(hour + duration);
+        const slot24 = `${start}-${end}`;
+
+        const div = document.createElement("div");
+        div.className = "time-slot animate-slide-in";
+        div.textContent = slot24;
+
+        const slotEnd = new Date(date + "T" + end + ":00");
+        if (date === todayStr && slotEnd <= now) continue;
+
+        // ✅ Check booked slots
+        if (bookedSlots.some(b => normalize(b) === normalize(slot24))) {
+          div.classList.add("booked"); 
+          div.textContent = "Booked";
+          div.innerHTML = "Booked <i class='bi bi-x-circle ms-1'></i>";
+        } else {
+          div.classList.add("available");
+          div.addEventListener("click", () => {
+            document.querySelectorAll(".time-slot").forEach(s => s.classList.remove("selected"));
+            div.classList.add("selected");
+            document.getElementById("selectedSlotInput").value = slot24;
+            document.getElementById("selectedSlotText").textContent = `Selected: ${slot24}`;
+            document.getElementById("selectedSlotText").innerHTML = `<i class="bi bi-check-circle-fill me-2"></i>Selected: ${slot24}`;
+          });
+        }
+
+        container.appendChild(div);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      // Set minimum date to today
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById("date").setAttribute('min', today);
+      
+      document.getElementById("date").addEventListener("change", generateSlots);
+      document.getElementById("duration").addEventListener("change", generateSlots);
+      
+      // Generate slots if date is already set
+      if (document.getElementById("date").value) {
+        generateSlots();
+      }
+    });
+    const phoneInput = document.getElementById("phone");
+    phoneInput.addEventListener("input", function () {
+      // Remove non-numeric characters
+      this.value = this.value.replace(/[^0-9]/g, "");
+      // Limit to 10 digits
+      if (this.value.length > 10) {
+        this.value = this.value.slice(0, 10);
+      }
+    });
+  </script>
+</body>
+</html>

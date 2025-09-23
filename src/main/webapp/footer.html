@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Footer - Indhira's Lake View Turf</title>
+
+<!-- Bootstrap Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  
+  /* Footer Styles */
+  .footer {
+    background: linear-gradient(135deg, #0a1929 0%, #0d2337 100%);
+    color: #f0f0f0;
+    padding: 60px 20px 20px;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 1s ease-in-out;
+  }
+  
+  .footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%2300ff88" fill-opacity="0.1" d="M0,128L48,117.3C96,107,192,85,288,112C384,139,480,213,576,218.7C672,224,768,160,864,138.7C960,117,1056,139,1152,149.3C1248,160,1344,160,1392,160L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+    background-size: cover;
+    background-position: center bottom;
+    opacity: 0.5;
+    z-index: -1;
+  }
+  
+  .footer.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 40px;
+    margin-bottom: 30px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .footer-section {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s ease-in-out;
+    flex: 1;
+    min-width: 250px;
+  }
+
+  .footer-section.show-section {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .footer-section h3, .footer-section h4 {
+    color: #00ff88;
+    margin-bottom: 20px;
+    text-shadow: 0 0 8px rgba(0, 255, 136, 0.5);
+    position: relative;
+    padding-bottom: 10px;
+    font-weight: 600;
+  }
+  
+  .footer-section h3::after, .footer-section h4::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 3px;
+    background: linear-gradient(90deg, #00ff88, #00cc66);
+    border-radius: 3px;
+  }
+
+  .footer-section p {
+    line-height: 1.6;
+    margin-bottom: 15px;
+    color: #ccc;
+  }
+
+  .footer-section a {
+    color: #f0f0f0;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .footer-section a i {
+    margin-right: 12px;
+    transition: transform 0.3s ease;
+    color: #00ff88;
+    font-size: 1.2rem;
+  }
+
+  .footer-section a:hover {
+    color: #00ff88;
+    transform: translateX(5px);
+  }
+
+  .footer-section a:hover i {
+    transform: scale(1.2);
+  }
+
+  .footer-bottom {
+    text-align: center;
+    font-size: 0.9rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 1s ease-in-out;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .footer-bottom.show-bottom {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .footer-bottom a {
+    color: #00ff88;
+    margin: 0 8px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+  
+  .footer-bottom a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: #00ff88;
+    transition: width 0.3s ease;
+  }
+  
+  .footer-bottom a:hover::after {
+    width: 100%;
+  }
+  
+  .footer-bottom a:hover {
+    color: #00cc66;
+    text-shadow: 0 0 6px rgba(0, 255, 136, 0.5);
+  }
+
+  /* Social Icons */
+  .footer-section.social {
+    text-align: center;
+  }
+  
+  .footer-section.social h4::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+  }
+  
+  .footer-section.social a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    margin: 5px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .footer-section.social a i {
+    margin-right: 0;
+    font-size: 1.4rem;
+    z-index: 2;
+  }
+  
+  .footer-section.social a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #00ff88, #00cc66);
+    border-radius: 50%;
+    transform: scale(0);
+    transition: transform 0.3s ease;
+    z-index: 1;
+  }
+  
+  .footer-section.social a:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 255, 136, 0.3);
+  }
+  
+  .footer-section.social a:hover::before {
+    transform: scale(1);
+  }
+  
+  .footer-section.social a:hover i {
+    color: #fff;
+    transform: scale(1.1);
+  }
+
+  /* Logo styling */
+  .footer-section.company-info img {
+    width: 200px;
+    height: auto;
+    margin-bottom: 15px;
+    filter: drop-shadow(0 0 5px rgba(0, 255, 136, 0.3));
+  }
+
+  /* Floating elements */
+  .floating-element {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(0, 255, 136, 0.1);
+    filter: blur(5px);
+    z-index: 0;
+  }
+  
+  .float-1 {
+    width: 100px;
+    height: 100px;
+    top: 10%;
+    left: 5%;
+    animation: float 15s ease-in-out infinite;
+  }
+  
+  .float-2 {
+    width: 150px;
+    height: 150px;
+    bottom: 15%;
+    right: 5%;
+    animation: float 18s ease-in-out infinite reverse;
+  }
+  
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0) translateX(0);
+    }
+    50% {
+      transform: translateY(-15px) translateX(15px);
+    }
+  }
+
+  /* Responsive Design */
+  @media (max-width: 992px) {
+    .footer-container {
+      gap: 30px;
+    }
+    
+    .footer-section {
+      min-width: 200px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .footer {
+      padding: 40px 15px 15px;
+    }
+    
+    .footer-container {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 30px;
+    }
+    
+    .footer-section {
+      width: 100%;
+      max-width: 400px;
+    }
+    
+    .footer-section h3::after, .footer-section h4::after {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    
+    .footer-section a {
+      justify-content: center;
+    }
+    
+    .social-links {
+      justify-content: center;
+    }
+    
+    .float-1, .float-2 {
+      display: none;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .footer-section {
+      min-width: unset;
+    }
+    
+    .footer-section.social a {
+      width: 40px;
+      height: 40px;
+    }
+    
+    .footer-section.social a i {
+      font-size: 1.2rem;
+    }
+  }
+</style>
+</head>
+<body>
+  <footer class="footer" id="footer">
+    <!-- Floating elements -->
+    <div class="floating-element float-1"></div>
+    <div class="floating-element float-2"></div>
+    
+    <div class="footer-container">
+      <!-- Company Info -->
+      <div class="footer-section company-info">
+        <img src="images/logo1.png" alt="Lake View Turf Logo">
+        <h3><i class="bi bi-trophy-fill"></i> Indhira's Lake View Turf</h3>
+        <p>Professional 7-a-side turf by the lakeside. Book slots, tournaments & events with ease!</p>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="footer-section quick-links">
+        <h4>Quick Links</h4>
+        <a href="turf.html"><i class="bi bi-house-fill"></i> Home</a>
+        <a href="about.html"><i class="bi bi-info-circle-fill"></i> About</a>
+        <a href="booking.html"><i class="bi bi-calendar-check-fill"></i> Booking</a>
+        <a href="pricing.html"><i class="bi bi-cash-stack"></i> Pricing</a>
+        <a href="gallery.html"><i class="bi bi-image-fill"></i> Gallery</a>
+        <a href="contact.html"><i class="bi bi-telephone-fill"></i> Contact</a>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="footer-section contact-info">
+        <h4>Contact</h4>
+        <a href="tel:+919788686714"><i class="bi bi-telephone-fill"></i> +91 9788686714</a>
+        <a href="https://wa.me/919788686714" target="_blank"><i class="bi bi-whatsapp"></i> WhatsApp</a>
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=imcturf@gmail.com&su=Booking Inquiry&body=Hello, I want to book a slot" target="_blank">
+          <i class="bi bi-envelope-fill"></i> info@lakeviewturf.com
+        </a>
+        <a href="#"><i class="bi bi-geo-alt-fill"></i> 123 Lakeview Street, City, India</a>
+      </div>
+
+      <!-- Social Media -->
+      <div class="footer-section social">
+        <h4>Follow Us</h4>
+        <div class="social-links">
+          <a href="https://www.facebook.com/imc_turf_trichy" target="_blank"><i class="bi bi-facebook"></i></a>
+          <a href="https://www.instagram.com/imc_turf_trichy" target="_blank"><i class="bi bi-instagram"></i></a>
+          <a href="#" target="_blank"><i class="bi bi-twitter"></i></a>
+          <a href="#" target="_blank"><i class="bi bi-youtube"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Legal / Copyright -->
+    <div class="footer-bottom">
+      <p>© 2025 Indhira's Lake View Turf | All rights reserved</p>
+      <p><a href="#">Privacy Policy</a> | <a href="#">Terms & Conditions</a></p>
+    </div>
+  </footer>
+
+<script>
+  // Animate footer and sections after load
+  window.addEventListener('DOMContentLoaded', () => {
+    const footer = document.getElementById('footer');
+    footer.classList.add('show');
+
+    const sections = document.querySelectorAll('.footer-section');
+    sections.forEach((section, index) => {
+      setTimeout(() => {
+        section.classList.add('show-section');
+      }, 300 * (index + 1)); // staggered animation
+    });
+
+    const footerBottom = document.querySelector('.footer-bottom');
+    setTimeout(() => {
+      footerBottom.classList.add('show-bottom');
+    }, 1500);
+  });
+</script>
+</body>
+</html>
