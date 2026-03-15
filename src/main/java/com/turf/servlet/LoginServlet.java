@@ -49,7 +49,7 @@ public class LoginServlet extends HttpServlet {
                     session.setAttribute("user_name", name);
 
                     // ✅ Redirect to dashboard (NOT turf1.html anymore)
-                    response.sendRedirect("turf1.html");
+                    response.sendRedirect("index.html");
 
                 } else {
                     out.println("<p style='color:red;'>❌ Invalid email or password!</p>");
